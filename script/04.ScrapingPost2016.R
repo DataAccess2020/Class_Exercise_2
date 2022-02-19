@@ -43,3 +43,20 @@ for (i in seq_along(links)) {
   
   Sys.sleep(2)
 }
+
+links
+
+#scrape the main text from each page
+to_scrape <- list.files(here::here("links 2016"), full.names = TRUE)   # get the list of pages 
+main_text <- vector(mode = "list", length = length(to_scrape))    # empty container where to place the text
+
+# Loop over the 47 pages and scrape the main text
+for (i in seq_along(main_text)){
+  main_text[[i]] <- read_html(to_scrape[i]) %>% 
+    html_elements(css = ".td_module_10 .td-module-title") %>% 
+    html_text(trim = TRUE)
+}
+
+str(main_text)
+main_text[[1]]    # main text form page 1
+main_text[[2]]    # main text form page 2
