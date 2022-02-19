@@ -1,11 +1,7 @@
-#insepcting the page with /robots.txt bring us to a 404 not found page. 
-#this means that there is no robots.txt: the web master doesn't provide
-#any restriction to scrapigin activities.Therefore, we decided to proced
-#with the following tasks of the exercise.
-
 library(rvest)
 library(tidyverse)
-download.packages(httr)
+install.packages(httr)
+install.packages("XML")
 
 url <- "https://beppegrillo.it/un-mare-di-plastica-ci-sommergera/"
 
@@ -24,10 +20,10 @@ download_politely <- function(from_url, to_html, my_email, my_agent = R.Version(
   
   # GET politely
   blog <- httr::GET(url = from_url, 
-                         add_headers(
-                           From = my_email, 
-                           `User-Agent` = R.Version()$version.string
-                         )
+                    add_headers(
+                      From = my_email, 
+                      `User-Agent` = R.Version()$version.string
+                    )
   )
   # If status == 200, extract content and save to a file:
   if (httr::http_status(blog)$message == "Success: (200) OK") {
@@ -43,3 +39,28 @@ download_politely(from_url = url,
                   to_html = here::here("blog_polite.html"), 
                   my_email = "ravarellierica@gmail.com")
 
+
+blog_links <- rvest::read_html(x = url) %>% ##parsing
+  html_elements(css="a")%>% ##getting nodes corresponding to links
+  html_attr("href") ##getting only the attribute "href"
+
+view(blog_links)
+typeof(blog_links)
+blog_links[1:115]
+
+##Get only links => select only strings beginning with https
+
+all_links <- str_subset(blog_links,  pattern = "^https?.*")
+all_links
+
+##Get only Grillo's blog links
+
+onlyGrillo_links <- str_subset(blog_links, pattern="beppegrillo.it")
+onlyGrillo_links
+
+##Generate a tibble with Grillo's blog links
+
+Grillo_links <- tibble(
+          x1=onlyGrillo_links,
+          x2=1:79)
+view(Grillo_links)
