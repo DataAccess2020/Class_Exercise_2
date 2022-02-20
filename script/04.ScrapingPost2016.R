@@ -4,8 +4,6 @@ library(curl)
 library(rvest)
 
 browseURL("https://beppegrillo.it/category/archivio/2016/")
-download.file(url = "https://beppegrillo.it/category/archivio/2016/ ", 
-              destfile = here::here("Blog 2016"))
 
 read_html(here::here("Blog 2016")) %>% 
   html_elements(css = ".td_module_10 a") %>% 
@@ -50,6 +48,8 @@ links
 to_scrape <- list.files(here::here("links 2016"), full.names = TRUE)   # get the list of pages 
 main_text <- vector(mode = "list", length = length(to_scrape))    # empty container where to place the text
 
+to_scrape
+
 # Loop over the 47 pages and scrape the main text
 for (i in seq_along(main_text)){
   main_text[[i]] <- read_html(to_scrape[i]) %>% 
@@ -60,3 +60,6 @@ for (i in seq_along(main_text)){
 str(main_text)
 main_text[[1]]    # main text form page 1
 main_text[[2]]    # main text form page 2
+
+
+#if in a page i there is no text, the CSS selector doesn't select anything and there is a missing value (NA) in the list main_text
