@@ -21,4 +21,5 @@ web pages, but are also used in web page content mining applications.
 We can say that web crawling is different from the scraping we did in the previous point 
 because while we extracted the data from a specific website with a known domanin and URL 
 ( in this case "https://beppegrillo.it/category/archivio/2016/"), web spiders are 
-programmes that help finding or discovering unknown URLs, domains or links on the web.
+programmes that help finding or discovering unknown URLs, domains or links on the web. 
+Moreover, Rcrawler allows us to implement crawling and data extraction simultaneously. 
