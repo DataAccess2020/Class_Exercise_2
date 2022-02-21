@@ -1,5 +1,5 @@
 The RCrawler is a package used for web crawling, downloading webpages and content scraping.
-Basically this package can crawls web sites and extracts their content using various 
+Basically this package can crawl web sites and extracts their content using various 
 techniques, from a given URL RCrawler can automatically crawl and parse all URLs in that 
 domain, and extract specific content from these URLs that matches the user criteria.
 Among other packages like "scrapeR" and "Rvest", or basic web toolkits like "XML", "Selectr",
@@ -18,4 +18,7 @@ crawl. There are various types of web crawlers:
 Web crawlers are known primarily for supporting the actions of search engines and collecting
 web pages, but are also used in web page content mining applications. 
 
-
+We can say that web crawling is different from the scraping we did in the previous point 
+because while we extracted the data from a specific website with a known domanin and URL 
+( in this case "https://beppegrillo.it/category/archivio/2016/"), web spiders are 
+programmes that help finding or discovering unknown URLs, domains or links on the web.
