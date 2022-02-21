@@ -1,6 +1,11 @@
+#inspecting the page with /robots.txt bring us to a 404 not found page.  
+#this means that there is no robots.txt: the web master doesn't provide
+#any restriction to scrapigin activities.Therefore, we decided to proced
+#with the following tasks of the exercise.
+
 library(rvest)
 library(tidyverse)
-install.packages(httr)
+install.packages("httr")
 install.packages("XML")
 
 url <- "https://beppegrillo.it/un-mare-di-plastica-ci-sommergera/"
@@ -55,12 +60,18 @@ all_links
 
 ##Get only Grillo's blog links
 
-onlyGrillo_links <- str_subset(blog_links, pattern="beppegrillo.it")
+onlyGrillo_links <- str_subset(blog_links, pattern="^https?://beppegrillo.it.*")
 onlyGrillo_links
+
+#without duplicates
+
+without_dubles <- unique(onlyGrillo_links)
+without_dubles[1:29]
 
 ##Generate a tibble with Grillo's blog links
 
 Grillo_links <- tibble(
-          x1=onlyGrillo_links,
-          x2=1:79)
+          x1=without_dubles,
+          x2=1:29)
 view(Grillo_links)
+
