@@ -23,3 +23,15 @@ because while we extracted the data from a specific website with a known domanin
 ( in this case "https://beppegrillo.it/category/archivio/2016/"), web spiders are 
 programmes that help finding or discovering unknown URLs, domains or links on the web. 
 Moreover, Rcrawler allows us to implement crawling and data extraction simultaneously. 
+
+Hypotesising how to build a spider scraper:
+  Rcrawler(Website, RequestsDelay = 0.5, Obeyrobots = TRUE, Useragent = "Chrome version", 
+           crawlUrlfilter = "^https?://beppegrillo.it.*") 
+
+Website: "https://beppegrillo.it/un-mare-di-plastica-ci-sommergera/" (the URL of the website to crawl)
+everything else default, exept:
+RequestsDelay: 0.5 (to avoid being banned beacuse of the too many requests)
+Obeyrobots: TRUE, to obey to rules set by the webmaster concerning content scraping/crawling
+Useragent: "Chrome version" 
+crawlUrlfilter: "^https?://beppegrillo.it.*" if we want to filter URLs to be crawled, 
+obtaining only links that re-direct to other posts of the beppegrillo.it blog
