@@ -16,9 +16,7 @@ library(rvest)
 
 1)	Inspect the robots.txt. Unusual, right? What will you do?
 
-
 Inspecting the page with /robots.txt brings us to a 404 not found page.  This means that there is no robots.txt: the web master doesn't provide any restriction to scrapigin activities. Therefore, we decided to proceed with the following tasks of the exercise.
-
 
 # Second Point
 
@@ -149,3 +147,40 @@ main_text[[1]]
 ```
 
 If in a page i there is no text, the CSS selector doesn't select anything and there is a missing value (NA) in the list main_text.
+
+# Fifth point
+
+5)	Check out the RCrawler package and its accompanying paper. What does it mean to “crawl”? and what is it a “web spider”? How is this different from a scraper you have built at point 5? Inspect the package documentation and sketch how you could build a spider scraper: which function(s) should you use? With which arguments? Don't do it, just sketch and explain.
+
+The **RCrawler** is a package used for web crawling, downloading webpages and content scraping.
+Basically this package can crawl web sites and extracts their content using various 
+techniques, from a given URL RCrawler can automatically crawl and parse all URLs in that 
+domain, and extract specific content from these URLs that matches the user criteria.
+Among other packages like "scrapeR" and "Rvest", or basic web toolkits like "XML", "Selectr",
+"Httr" and "RCurl", RCrawler is the only one that can crawl. 
+
+**Crawl** is a method of finding web links originating from one URL or a list of URLs. Crawling 
+can be implemented with data extraction either as two separate consecutive tasks or as 
+simultaneous tasks. 
+
+**Web spiders** are programs that automatically browse and download web pages by following 
+hyperlinks in a methodical and automated manner, therefore are programs that can 
+crawl. There are various types of web crawlers:
+  1. "**universal crawlers**" are intended to crawl and index all web pages without minding 
+      their content;
+  2. "**preferential crawlers**", are more targeted towards a specific topic. 
+Web crawlers are known primarily for supporting the actions of search engines and collecting
+web pages, but are also used in web page content mining applications. 
+
+We can say that web crawling is different from the scraping we did in the previous point 
+because while we extracted the data from a specific website with a known domain and URL 
+(in this case "https://beppegrillo.it/category/archivio/2016/"), web spiders are 
+programes that help finding or discovering unknown URLs, domains or links on the web. 
+Moreover, Rcrawler allows us to implement crawling and data extraction simultaneously. 
+Source: RCrawler: Samlim, K., Fakir, M., _An R package for parallel web crawling and scraping_.
+
+
+
+
+
+
