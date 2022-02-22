@@ -1,0 +1,151 @@
+---
+title: 'Spider-Wo-Men: with great power comes great responsibility'
+author: "Alba Proficuo_Erica Ravarelli"
+date: '2022-02-22'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(httr)
+library(curl)
+library(rvest)
+```
+
+# First Point
+
+1)	Inspect the robots.txt. Unusual, right? What will you do?
+
+
+Inspecting the page with /robots.txt brings us to a 404 not found page.  This means that there is no robots.txt: the web master doesn't provide any restriction to scrapigin activities. Therefore, we decided to proceed with the following tasks of the exercise.
+
+
+# Second Point
+
+2)	Check out the following link: http://www.beppegrillo.it/un-mare-diplastica-ci-sommergera/. Download it using rcurl: :getURL() to download the page while informing the webmaster about your browser details and providing your email.
+
+We created a function `download_politely(from_url,to_html)` to download politely the web page:
+
+```{r}
+url <- "https://beppegrillo.it/un-mare-di-plastica-ci-sommergera/"
+
+require(httr)
+
+
+download_politely <- function(from_url, to_html, my_email, my_agent = R.Version()$version.string) {
+  
+  require(httr)
+  
+  stopifnot(is.character(from_url))
+  stopifnot(is.character(to_html))
+  stopifnot(is.character(my_email))
+  
+  blog <- httr::GET(url = from_url, 
+                    add_headers(
+                      From = my_email, 
+                      `User-Agent` = R.Version()$version.string
+                    )
+  )
+  if (httr::http_status(blog)$message == "Success: (200) OK") {
+    bin <- content(blog, as = "raw")
+    writeBin(object = bin, con = to_html)
+  } else {
+    cat("Houston, we have a problem!")
+  }
+}
+
+download_politely(from_url = url, 
+                  to_html = here::here("blog_polite.html"), 
+                  my_email = "ravarellierica@gmail.com")
+
+
+
+```
+
+# Third point 
+
+3)	Create a data frame with all the HTML links in the page. You can use rvest:: or check out the XML::getHTMLLinks function. Then, use a regex to keep only those links that re-direct to other posts of the beppegrillo.it blog (so remove all other links)
+
+We did the parsing of the downloaded page, extracting only nodes corresponding to links. Since the vector we obtained contaned also missing values, we applied a regular expression in order to get only strings beginning with "https"
+
+```{r}
+blog_links <- rvest::read_html(x = url) %>% 
+  html_elements(css="a")%>% 
+  html_attr("href")
+
+all_links <- str_subset(blog_links,  pattern = "^https?.*")
+```
+
+We got only Grillo links appling another regular expression, then we removed duplicates and we created a data frame.
+
+```{r}
+onlyGrillo_links <- str_subset(blog_links, pattern="^https?://beppegrillo.it.*")
+
+without_dubles <- unique(onlyGrillo_links)
+
+Grillo_links <- tibble(
+          x1=without_dubles,
+          x2=1:29)
+Grillo_links
+```
+
+# Fourth point
+
+4)	Check out the following link: http://www.beppegrillo.it/category/archivio/2016/. It contains the entire blog for 2016. There are 47 pages of entries. Scrape all the posts for 2016 following this strategy: 
+a. For each of the 47 pages, get all the links and place them into a list (or character vector). Tip: see how the URL changes to build the loop! 
+b. For each single linked blog post, download the page as a file and sys .sleep () a little. 
+c. For each downloaded page, scrape the main text. Ask yourself what happens if a page contains no text. 
+
+We downloaded the page, then we built the full list of links to each page using string concatenate. We downloaded each single page, storing them in a new folder called "links 2016". 
+
+```{r}
+
+download_politely <- function(from_url, to_html, my_email, my_agent = R.Version()$version.string) {require(httr)
+  stopifnot(is.character(from_url))
+  stopifnot(is.character(to_html))
+  stopifnot(is.character(my_email))
+  blog <- httr::GET(url = from_url, 
+                    add_headers(
+                      From = my_email, 
+                      `User-Agent` = R.Version()$version.string
+                    )
+  )
+  if (httr::http_status(blog)$message == "Success: (200) OK") {
+    bin <- content(blog, as = "raw")
+    writeBin(object = bin, con = to_html)
+  } else {
+    cat("Houston, we have a problem!")
+  }
+}
+
+require(stringr)
+links <- str_c("https://beppegrillo.it/category/archivio/2016/page/", 1:47)
+dir.create("links 2016")   
+
+
+for (i in seq_along(links)) {
+  cat(i, " ")
+  download_politely(from_url = links[i], 
+                    to_html = here::here("links 2016", str_c("page_",i,".html")), 
+                    my_email = "albaproficuo@icloud.com")
+  
+  Sys.sleep(0.5)
+}
+```
+
+We scraped the main text from each page with a loop. We got the list of pages that we used to scrape the text, then we created an empty container where to place it. We used the selector gadget in order to understand which css selector was the right one.
+
+```{r}
+to_scrape <- list.files(here::here("links 2016"), full.names = TRUE)   
+main_text <- vector(mode = "list", length = length(to_scrape))    
+
+for (i in seq_along(main_text)){
+  main_text[[i]] <- read_html(to_scrape[i]) %>% 
+    html_elements(css = ".td_module_10 .td-module-title") %>% 
+    html_text(trim = TRUE)
+}
+
+main_text[[1]]
+```
+
+If in a page i there is no text, the CSS selector doesn't select anything and there is a missing value (NA) in the list main_text.
