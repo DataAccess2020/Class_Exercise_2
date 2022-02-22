@@ -10,6 +10,7 @@ library(tidyverse)
 library(httr)
 library(curl)
 library(rvest)
+library(knitr)
 ```
 
 # First Point
@@ -84,7 +85,7 @@ without_dubles <- unique(onlyGrillo_links)
 Grillo_links <- tibble(
           x1=without_dubles,
           x2=1:29)
-Grillo_links
+kable((Grillo_links), col.names = c("link", "number"), align="l")
 ```
 
 # Fourth point
@@ -131,7 +132,7 @@ for (i in seq_along(links)) {
 }
 ```
 
-We scraped the main text from each page with a loop. We got the list of pages that we used to scrape the text, then we created an empty container where to place it. We used the selector gadget in order to understand which css selector was the right one.
+We scraped the main text from each page with a loop. We got the list of pages that we used to scrape the text, then we created an empty container where to place it. We used the selector gadget in order to understand which css selector was the right one. We obtained a list from which we removed duplicates, obtaining another list (`without_duplicates`) with the main text as a character vector.
 
 ```{r}
 to_scrape <- list.files(here::here("links 2016"), full.names = TRUE)   
@@ -143,8 +144,12 @@ for (i in seq_along(main_text)){
     html_text(trim = TRUE)
 }
 
-main_text[[1]]
+without_duplicates <- unique(main_text)
+kable(without_duplicates[[1]], col.names="main text page 1")
+kable(without_duplicates[[2]], col.names="main text page 2")
+kable(without_duplicates[[3]], col.names="main text page 3")
 ```
+
 
 If in a page i there is no text, the CSS selector doesn't select anything and there is a missing value (NA) in the list main_text.
 

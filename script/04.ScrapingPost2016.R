@@ -58,8 +58,11 @@ for (i in seq_along(main_text)){
 }
 
 str(main_text)
-main_text[[1]]    # main text form page 1
-main_text[[2]]    # main text form page 2
+without_duplicates <- unique(main_text)
+without_duplicates[[1]]    # main text form page 1
+without_duplicates[[2]]    # main text form page 2
+
+typeof(without_duplicates[[1]])
 
 
 #if in a page i there is no text, the CSS selector doesn't select anything and there is a missing value (NA) in the list main_text
