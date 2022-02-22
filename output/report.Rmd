@@ -199,11 +199,11 @@ obtaining only links that re-direct to other posts of the beppegrillo.it blog
 
 # Individual constributions
 
-- number of commits per person: Alba Proficuo_ ..., Erica Ravarelli_...; 
+- number of commits per person: Alba Proficuo_ 6, Erica Ravarelli_ 11; 
 - number of issues opened: 2;
-- number of pull requests opened: 1;
-- number of pull requests accepted and merged: 1;
-- number of new branches opened: 1.
+- number of pull requests opened: 2;
+- number of pull requests accepted and merged: 2;
+- number of new branches opened: 2.
 
 Individual tasks:
 
