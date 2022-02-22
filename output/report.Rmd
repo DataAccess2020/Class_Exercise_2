@@ -197,5 +197,19 @@ Useragent: "Chrome version"
 crawlUrlfilter: "^https?://beppegrillo.it.*" if we want to filter URLs to be crawled, 
 obtaining only links that re-direct to other posts of the beppegrillo.it blog
 
+# Individual constributions
+
+- number of commits per person: Alba Proficuo_ ..., Erica Ravarelli_...; 
+- number of issues opened: 2;
+- number of pull requests opened: 1;
+- number of pull requests accepted and merged: 1;
+- number of new branches opened: 1.
+
+Individual tasks:
+
+Erica Ravarelli: Inspect robots.txt, download the link, https://beppegrillo.it/un-mare-di-plastica-ci-sommergera/, inform the webmaster on our identity, do dataframe with all HTML links, select the links that redirect to the post of https://beppegrillo.it site with regular expressions, scrape the text from the downloaded pages, sketch and design of the spider scraper. 
+
+Alba Proficuo: Inspect robots.txt, https://beppegrillo.it/un-mare-di-plastica-ci-sommergera/, inform the webmaster on our identity, put all 47 links to the pages in a list, download the page of every link, scrape post from 2016 from the site https://beppegrillo.it/category/archivio/2016/, definition of 'crawl' and 'web spider', differences between crawling and the scraping we did in the last task, 
+
 
 
