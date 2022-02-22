@@ -185,7 +185,17 @@ Moreover, Rcrawler allows us to implement crawling and data extraction simultane
 Source: RCrawler: Samlim, K., Fakir, M., _An R package for parallel web crawling and scraping_.
 
 
+Hypothesizing how to build a spider scraper:
+Rcrawler(Website, RequestsDelay = 0.5, Obeyrobots = TRUE, Useragent = "Chrome version", 
+        crawlUrlfilter = "^https?://beppegrillo.it.*") 
 
+Website: "https://beppegrillo.it/un-mare-di-plastica-ci-sommergera/" (the URL of the website to crawl)
+everything else default, exept:
+RequestsDelay: 0.5 (to avoid being banned beacuse of the too many requests)
+Obeyrobots: TRUE, to obey to rules set by the webmaster concerning content scraping/crawling
+Useragent: "Chrome version" 
+crawlUrlfilter: "^https?://beppegrillo.it.*" if we want to filter URLs to be crawled, 
+obtaining only links that re-direct to other posts of the beppegrillo.it blog
 
 
 
